@@ -150,7 +150,7 @@ const Checkout = () => {
                             <div>
                                 <h3 className="text-lg mb-4">Pay with PayPal</h3>
                                 <PayPalButton 
-                                    amount={100} 
+                                    amount={cart.totalPrice.toString()} 
                                     onSuccess={handlePaymentSuccess} 
                                     onError={(err) => alert("Payment Failed, Try Again Later.")}
                                 />

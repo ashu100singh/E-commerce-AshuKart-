@@ -25,7 +25,7 @@ router.post('/', async(req,res) => {
     try {
         const product = await Product.findById(productId)
         if(!product){
-            res.status(404).json({message: "Prodcut not found"})
+            res.status(404).json({message: "product not found"})
         }
 
         //Dtermine if the user is logged in or guest
@@ -165,7 +165,7 @@ router.delete("/", async(req, res) => {
                 message: "Product removed from the cart successfully"
             })
         } else{
-            return res.status(404).json({message: "Prodcut not found in the cart"})
+            return res.status(404).json({message: "product not found in the cart"})
         }
     } catch (error) {
         console.error(error)

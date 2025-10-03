@@ -111,7 +111,7 @@ const productSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        //fetch prodcuts with filters
+        //fetch products with filters
         .addCase(fetchProductsByFilters.pending, (state) => {
             state.loading = true
             state.error = null
@@ -124,7 +124,7 @@ const productSlice = createSlice({
             state.loading = false
             state.error = action.error.message
         })
-        //fetch single prodcut details
+        //fetch single product details
         .addCase(fetchProductDetails.pending, (state) => {
             state.loading = true
             state.error = null

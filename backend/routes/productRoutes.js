@@ -249,7 +249,7 @@ router.get("/best-seller", async(req, res) => {
         if(bestSeller){
             res.json(bestSeller)
         } else{
-            res.status(404).json({message: "No Best Selling Prodcut Found"})
+            res.status(404).json({message: "No Best Selling product Found"})
         }
     } catch (error) {
         console.error(error)
@@ -283,7 +283,7 @@ router.get("/:id", async(req, res) => {
         if(product){
             res.json(product)
         } else{
-            res.status(404).json({message: "Prodcut not found"})
+            res.status(404).json({message: "product not found"})
         }
     } catch (error) {
         console.error(error)

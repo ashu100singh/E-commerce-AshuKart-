@@ -243,19 +243,22 @@ router.get("/", async(req, res) => {
 //@route GET /api/products/best-seller
 //@desc Retrieve a product with highest rating
 //@access PUBLIC
-router.get("/best-seller", async(req, res) => {
-    try {
-        const bestSeller = await Product.findOne().sort({rating: -1})
-        if(bestSeller){
-            res.json(bestSeller)
-        } else{
-            res.status(404).json({message: "No Best Selling product Found"})
-        }
-    } catch (error) {
-        console.error(error)
-        res.status(500).send("Server Error")
+router.get("/best-seller", async (req, res) => {
+  try {
+    const bestSellers = await Product.findOne().sort({ rating: -1 })
+
+    if (bestSellers) {
+      //  console.log(bestSellers)
+      res.json(bestSellers);
+    } else {
+      res.status(404).json({ message: "No Best Selling products found" });
     }
-})
+  } catch (error) {
+    console.error("❌ Error in /best-seller route:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+});
+
 
 
 //@route GET /api/products/new-arrivals
@@ -265,26 +268,8 @@ router.get("/new-arrivals", async(req, res) => {
     try {
         //fetch latest 8 products
         const newArrivals = await Product.find().sort({createdAt: -1}).limit(8)
+
         res.json(newArrivals)
-    } catch (error) {
-        console.error(error)
-        res.status(500).send("Server Error")
-    }
-})
-
-//@route GET /api/products/:id
-//@desc Get a single Product by ID
-//@access PUBLIC
-router.get("/:id", async(req, res) => {
-    try {
-        const productId = req.params.id
-        const product = await Product.findById(productId)
-
-        if(product){
-            res.json(product)
-        } else{
-            res.status(404).json({message: "product not found"})
-        }
     } catch (error) {
         console.error(error)
         res.status(500).send("Server Error")
@@ -317,6 +302,25 @@ router.get("/similar/:id", async(req,res) => {
     }
 })
 
+
+//@route GET /api/products/:id
+//@desc Get a single Product by ID
+//@access PUBLIC
+router.get("/:id", async(req, res) => {
+    try {
+        const productId = req.params.id
+        const product = await Product.findById(productId)
+
+        if(product){
+            res.json(product)
+        } else{
+            res.status(404).json({message: "product not found"})
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).send("Server Error")
+    }
+})
 
 
 module.exports = router 

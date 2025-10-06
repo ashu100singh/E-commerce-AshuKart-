@@ -58,7 +58,7 @@ export const updateProduct = createAsyncThunk("products/updateProduct", async ({
     return response.data
 })
 
-
+    
 //Thuck to fetch similar products
 export const fetchSimilarProducts = createAsyncThunk("products/fetchSimilarProducts", async ({id}) => {
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/similar/${id}`) 
@@ -149,12 +149,12 @@ const productSlice = createSlice({
                 (product) => product._id === updatedProduct._id
             )
             if(index !== -1){
-                state.products[index] = updateProduct
+                state.products[index] = updatedProduct
             }
         })
         .addCase(updateProduct.rejected, (state, action) => {
             state.loading = false
-            state.error = action.error.message
+            state.error = action.payload.message
         })
         //fetch similar products
         .addCase(fetchSimilarProducts.pending, (state) => {
@@ -163,11 +163,11 @@ const productSlice = createSlice({
         })
         .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
             state.loading = false
-            state.products = action.payload
+            state.similarProducts = action.payload
         })
         .addCase(fetchSimilarProducts.rejected, (state, action) => {
             state.loading = false
-            state.error = action.error.message
+            state.error = action.payload.message
         })
     }
 })

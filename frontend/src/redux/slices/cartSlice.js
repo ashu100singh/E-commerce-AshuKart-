@@ -126,8 +126,8 @@ const cartSlice = createSlice({
         })
         .addCase(addToCart.fulfilled, (state, action) => {
             state.loading = false
-            state.cart = action.payload
-            saveCartToStorage(action.payload)
+            state.cart = action.payload.cart ?? action.payload
+            saveCartToStorage(action.payload.cart ?? action.payload)
         })
         .addCase(addToCart.rejected, (state, action) => {
             state.loading = false
@@ -140,8 +140,8 @@ const cartSlice = createSlice({
         })
         .addCase(updateCartItemQuantity.fulfilled, (state, action) => {
             state.loading = false
-            state.cart = action.payload
-            saveCartToStorage(action.payload)
+            state.cart = action.payload.cart ?? action.payload
+            saveCartToStorage(action.payload.cart ?? action.payload)
         })
         .addCase(updateCartItemQuantity.rejected, (state, action) => {
             state.loading = false
@@ -154,8 +154,8 @@ const cartSlice = createSlice({
         })
         .addCase(removeFromCart.fulfilled, (state, action) => {
             state.loading = false
-            state.cart = action.payload
-            saveCartToStorage(action.payload)
+            state.cart = action.payload.cart ?? action.payload
+            saveCartToStorage(action.payload.cart ?? action.payload)
         })
         .addCase(removeFromCart.rejected, (state, action) => {
             state.loading = false
@@ -168,8 +168,8 @@ const cartSlice = createSlice({
         })
         .addCase(mergeCart.fulfilled, (state, action) => {
             state.loading = false
-            state.cart = action.payload
-            saveCartToStorage(action.payload)
+            state.cart = action.payload.cart ?? action.payload
+            saveCartToStorage(action.payload.cart ?? action.payload)
         })
         .addCase(mergeCart.rejected, (state, action) => {
             state.loading = false

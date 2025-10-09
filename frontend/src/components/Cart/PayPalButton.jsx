@@ -1,36 +1,33 @@
-import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
+import React from "react";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-
-const PayPalButton = ({amount, onSuccess, onError}) => {
+const PayPalButton = ({ amount, onSuccess, onError }) => {
   return (
-    <PayPalScriptProvider options={{ 
-        clientId : import.meta.env.VITE_PAYPAL_CLIENT_ID, 
+    <PayPalScriptProvider
+      options={{
+        clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
         currency: "USD",
-        intent: "CAPTURE"
-    }}>
-
-        <PayPalButtons 
-            style={{layout: "vertical"}} 
-            createOrder={(data, actions) => {
-                return actions.order.create({
-                    purchase_units: [
-                        {
-                            amount: {
-                                currency_code: "USD",
-                                value: amount.toString()
-                            }
-                        }
-                    ]
-                })
-            }}
-            onApprove={(data, actions) => {
-                return actions.order.capture().then(onSuccess)
-            }}
-            onError={onError}
-        />
-
+        intent: "CAPTURE",
+      }}
+      url="https://www.sandbox.paypal.com/sdk/js"
+    >
+      <PayPalButtons
+        style={{ layout: "vertical" }}
+        createOrder={(data, actions) =>
+          actions.order.create({
+            purchase_units: [
+              { amount: { value: parseFloat(amount).toFixed(2) } },
+            ],
+          })
+        }
+        onApprove={async (data, actions) => {
+          const order = await actions.order.capture();
+          onSuccess(order);
+        }}
+        onError={onError}
+      />
     </PayPalScriptProvider>
-  )
-}
+  );
+};
 
-export default PayPalButton
+export default PayPalButton;

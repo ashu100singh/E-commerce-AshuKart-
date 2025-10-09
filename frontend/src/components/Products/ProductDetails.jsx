@@ -13,7 +13,7 @@ const ProductDetails = ({productId}) => {
     const {selectedProduct, loading, error, similarProducts} = useSelector((state) => state.products)
 
     const {user, guestId} = useSelector((state) => state.auth)
-    const [mainImage, setMainImage] = useState("")
+    const [mainImage, setMainImage] = useState(null)
     const [selectedSize, setSelectedSize] = useState("")
     const [selectedColor, setSelectedColor] = useState("")
     const [quantity, setQuantity] = useState(1)
@@ -62,9 +62,9 @@ const ProductDetails = ({productId}) => {
         })).then(() => {
             toast.success("Product added to cart", {
                 duration: 1000
-            }).finally(() => {
-                setIsButtonDisabled(false)
             })
+        }).finally(() => {
+            setIsButtonDisabled(false)
         })
     }
 
@@ -99,11 +99,15 @@ const ProductDetails = ({productId}) => {
                         {/* Main Image */}
                         <div className='md:w-1/2'>
                             <div className='mb-4'>
-                                <img
-                                    src={mainImage}
-                                    alt='Main Product'
-                                    className='w-full h-auto object-cover rounded-lg'
-                                />
+                                {
+                                    mainImage && (
+                                        <img
+                                            src={mainImage}
+                                            alt='Main Product'
+                                            className='w-full h-auto object-cover rounded-lg'
+                                        />
+                                    )
+                                } 
                             </div>
                         </div>
 
